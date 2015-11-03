@@ -31,20 +31,6 @@ class Profile:
         self.weight = weight
         self.features = features
 
-    def __getitem__(self, pos):
-        """The probabilities at the position
-        Returns:
-          dictionary: char -> float [0,1]
-        """
-        return self.profile[pos]
-
-    def __len__(self):
-        """The width of the motif
-        Returns:
-          int
-        """
-        return len(self.profile)
-
     def __str__(self):
         """The name and class of the Profile"""
         out = self.name
