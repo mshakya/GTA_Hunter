@@ -1,8 +1,13 @@
 """
 File name: GTA_Tool.py
 Date created: 22/10/2015
-Date last modified: 22/10/2015
+Date last modified: 4/12/2015
 Python version: 2.7
+Description: Combines Loader.py,
+	Profile.py, SVM.py, Features.py,
+	Weight.py, and Filter.py to be able
+	to characterize and classify two different
+	types of genes (GTA and phage).
 """
 
 ###############
