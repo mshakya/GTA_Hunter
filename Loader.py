@@ -13,6 +13,7 @@ Description: A class containing a list
 ###############
 from Profile import Profile
 import os
+import argparse
 import numpy as np
 
 ############
@@ -21,13 +22,14 @@ import numpy as np
 class Loader:
 	"""Contains all information pertaining to a given gene."""
 
-	def __init__(self, profiles, label):
+	def __init__(self, profiles, profileDict, label):
 		""" Do not call directly, use the load 
 			method instead.
 			Example:
 				sequences = Loader.load("file.fa", "GTA")
 		"""
 		self.profiles = profiles
+		self.profileDict = profileDict
 		self.label = label
 
 	@staticmethod
@@ -38,8 +40,9 @@ class Loader:
 		  label (string): the assigned label for the file, 
 			used in training SVM (optional)
 		Returns:
-			A Loader Object with the 
+			A Loader Object with the loaded profiles
 		Example:
+			profiles = Loader.load('genes/gene5.fna', label='GTA')
 		"""
 
 		# Check extensions (.fna, .faa, .w, fe, and .km accepted)
@@ -64,39 +67,50 @@ class Loader:
 			raise Exception("The file %r cannot be read."%(filename))
 
 		# Create profile dictionary
-		profiles = {}
+		profiles = []
+		profileDict = {}
 		# Parse file
 		isFirst = True
 		for line in open(filename, 'r'):
 			line = line.strip()
-			if line[0] == '>':
-				name = line[1:]
-				if target == "prot_seq" or target == "dna_seq":
-					data = ''
-				if not isFirst: # update data and save profile
-					setattr(profile, target, data)
-					profile[name] = profile
-				# create profile
-				profile = Profile(name, label)
-				isFirst = False
-			else:
+			# Get info if not the start of an element
+			if line[0] != '>':
 				if target == "features": # csv
 					data = line.split(',')
 					# convert to int/float
 					for i in range(len(data)):
-						data[i] = int(data[i])
-						# except ValueError:
-						# 	data[i] = float(data[i])
+						data[i] = float(data[i])
 				elif target == "weight": # float
 					data = float(line)
 				else: # multiline string
 					data += line
+			# Start of an element, initialize vars
+			else:
+				# update data and save profile of previous element
+				if not isFirst:
+					setattr(profile, target, data)
+					profiles.append(profile)
+					profileDict[name] = profile
+				# init new profile info
+				name = line[1:].split()[0]
+				org_name = line[1:]
+				# if '[' in line and ']' in line:
+				# 	org_name = line[line.index('[')+1:line.index(']')]
+				# else:
+				# 	org_name = name
+				if target == "prot_seq" or target == "dna_seq":
+					data = ''
+				# create profile
+				profile = Profile(name, org_name, label)
+				# Clear isFirst
+				isFirst = False
 
 		# update data and save profile for last one
 		setattr(profile, target, data)
-		profile[name] = profile
+		profiles.append(profile)
+		profileDict[name] = profile
 
-		return Loader(profiles, label)
+		return Loader(profiles, profileDict, label)
 
 
 	def __getitem__(self, pos):
@@ -104,7 +118,10 @@ class Loader:
 		Returns:
 		  Object: Profile
 		"""
-		return self.profiles[pos]
+		if type(pos) == int:
+			return self.profiles[pos]
+		elif type(pos) == str:
+			return self.profileDict[pos]
 
 	def __len__(self):
 		"""The number of profiles loaded
@@ -117,11 +134,11 @@ class Loader:
 		"""The class of the profiles"""
 		return self.label
 
-	def write(self, datatype, outfile):
+	def write(self, profiles, datatype, outfile):
 		"""Writes data to target outfile"""
 		out = open(outfile, 'w')
 		for profile in profiles:
-			out.write('>' + profile.name + '\n')
+			out.write('>' + profile.org_name + '\n')
 			if datatype == "prot_seq" or datatype == "dna_seq":
 				data = getattr(profile, datatype)
 				for i in range(0, len(data), 70):
@@ -142,5 +159,45 @@ class Loader:
 		out.close()
 		return
 
-	
+if __name__ == '__main__':
+	# Define arg parser
+	parser = argparse.ArgumentParser(description="Test uniquing.")
 
+	### Define Args ###
+
+	# Main
+	parser.add_argument("-g", "--GTA", type=str, nargs=1,
+		dest="gta", required=True,
+		help="The .faa or .fna training file for GTA genes.")
+	parser.add_argument("-v", "--virus", type=str, nargs=1,
+		dest="virus", required=True,
+		help="The .faa or .fna training file for viral genes.")
+	parser.add_argument("-q", "--queries", type=str, nargs=1,
+		dest="queries", required=True,
+		help="The .faa or .fna query file to be purged.")
+	parser.add_argument("-o", "--out", type=str, nargs=1,
+		dest="outfile", required=True,
+		help="The .faa or .fna out file to be written.")
+
+	args = parser.parse_args()
+	
+	### Load training set and testset ###
+	gta_file = args.gta[0]
+	virus_file = args.virus[0]
+	test_file = args.queries[0]
+	out_file = args.outfile[0]
+	# Load profiles
+	gta_profs = Loader.load(gta_file, "GTA")
+	viral_profs = Loader.load(virus_file, "virus")
+	test_profs = Loader.load(test_file, "test")
+	
+	# Add unique to list
+	uniques = []
+	for profile in test_profs:
+		if profile.name in gta_profs.profileDict or profile.name in viral_profs.profileDict:
+			# print("I'm not unique: %s" % profile)
+			pass
+		else:
+			uniques.append(profile)
+	# Write out uniques from test set
+	test_profs.write(uniques, "prot_seq", out_file)

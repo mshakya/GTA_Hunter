@@ -1,0 +1,72 @@
+python Weight.py -p test/orfg5/viral_5.faa -w test/orfg5/viral_5.dist -v -d 0.5 -c
+  /-Burkholderia phage Bcep176
+-*
+  /-Burkholderia phage KS9
+-*
+  /-Mycobacterium phage Babsiella
+-*
+  /-Rhodococcus phage REQ1
+-*
+  /-Azospirillum phage Cd
+-*
+  /-Geobacillus phage GBK2
+-*
+  /-Vibrio phage henriette 12B8
+-*
+  /-Lactobacillus phage LF1
+-*
+  /-Lactobacillus phage phiadh
+-*
+  /-Paenibacillus phage phiIBB_Pl23
+-*
+  /-Enterobacteria phage SfV
+-*
+     /-Staphylococcus phage vB_SepS_SEP9
+  /-*
+  |  \-Staphylococcus phage 6ec
+-*
+     /-Streptococcus phage DT1
+  /-*
+  |  \-Streptococcus phage Abc2
+-*
+     /-Lactobacillus phage Ld25A
+  /-*
+  |  |     /-Lactobacillus phage LL-Ku
+  |  |  /-*
+  |  |  |  \-Lactobacillus phage phiLdb
+  |  \-*
+  |     |  /-Lactobacillus phage Ld3
+  |     \-*
+  |        |  /-Lactobacillus phage c5
+  |        \-*
+  |           \-Lactobacillus phage Ld17
+-*
+     /-Rhizobium phage 16-3
+  /-*
+  |  \-Rhizobium phage 16-3
+-*
+     /-Enterobacteria phage phiP27
+  /-*
+  |  |  /-Salmonella phage ST64B
+  |  \-*
+  |     |  /-Shigella phage SfII
+  |     \-*
+  |        \-Shigella phage SfIV
+-*
+     /-Yersinia phage phiR201
+  /-*
+  |  |  /-Enterobacteria phage T5
+  |  \-*
+  |     |  /-Enterobacteria phage EPS7
+  |     \-*
+  |        |  /-Escherichia phage bV_EcoS_AKFV33
+  |        \-*
+  |           \-Escherichia phage vB_EcoS_FFH1
+-*
+     /-Streptomyce phage TG1
+  /-*
+  |  |  /-Streptomyces phage phiC31
+  |  \-*
+  |     \-Streptomyces phage phiBT1
+-*
+24 genes have been clustered, out of 35 total, over 7 clusters.

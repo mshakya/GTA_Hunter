@@ -14,7 +14,7 @@ Description: A data structure for
 class Profile:
 	"""Contains all information pertaining to a given gene."""
 
-	def __init__(self, name, label=None, dna_seq=None, prot_seq=None, weight=None, features=None, score=None):
+	def __init__(self, name, org_name, label=None, dna_seq=None, prot_seq=None, weight=None, features=None, score=None):
 		"""A Profile with at least one initialized variable
 		Args:
 		  name (string): name of the gene
@@ -25,6 +25,7 @@ class Profile:
 		  features: a sequence of features derived from Feature (optional)
 		"""
 		self.name = name
+		self.org_name = org_name
 		self.label = label
 		self.dna_seq = dna_seq
 		self.prot_seq = prot_seq
@@ -34,19 +35,20 @@ class Profile:
 
 	def __str__(self):
 		"""The name and class of the Profile"""
-		out = self.name
+		out = self.org_name
 		if self.label:
 			out = out + ": " + self.label
 		if self.score:
 		  out = out + "\t" + score
 		return out
 
-	def __getitem__(self, pos):
-		"""The feature at given postion
-		Returns:
-		  Feature (float)
-		"""
-		return self.features[pos]
+	# messes up xval when collapsing split
+	# def __getitem__(self, pos):
+	# 	"""The feature at given postion
+	# 	Returns:
+	# 	  Feature (float)
+	# 	"""
+	# 	return self.features[pos]
 
 	def __len__(self):
 		"""The length of features

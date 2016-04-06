@@ -1,0 +1,126 @@
+python Weight.py -p test/orfg5/GTA_5.faa -w test/orfg5/GTA_5.dist -v -d 0.5 -c
+  /-Hirschia baltica ATCC 49814
+-*
+  /-Pelagibacterium halotolerans B2
+-*
+  /-Erythrobacter litoralis HTCC2594
+-*
+  /-Pseudovibrio sp. FO-BEG1
+-*
+  /-Maricaulis maris MCS10
+-*
+  /-Polymorphum gilvum SL003B-26A1
+-*
+  /-Methylocystis sp. SC2
+-*
+  /-Starkeya novella DSM 506
+-*
+  /-Parvibaculum lavamentivorans DS-1
+-*
+  /-Parvularcula bermudensis HTCC2503
+-*
+  /-Hyphomicrobium nitrativorans NL23
+-*
+  /-Agrobacterium vitis S4
+-*
+     /-Brucella melitensis ATCC 23457
+  /-*
+  |  |  /-Brucella abortus bv. 1 str. 9-941
+  |  \-*
+  |     |  /-Brucella microti CCM 4915
+  |     \-*
+  |        |  /-Brucella pinnipedialis B2/94
+  |        \-*
+  |           \-Brucella suis 1330
+-*
+     /-Caulobacter segnis ATCC 21756
+  /-*
+  |  \-Caulobacter sp. K31
+-*
+     /-Hyphomicrobium sp. MC1
+  /-*
+  |  |  /-Hyphomicrobium denitrificans 1NES1
+  |  \-*
+  |     \-Hyphomicrobium denitrificans ATCC 51888
+-*
+     /-Paracoccus denitrificans PD1222
+  /-*
+  |  \-Paracoccus aminophilus JCM 7686
+-*
+     /-Azorhizobium caulinodans ORS 571
+  /-*
+  |  \-Xanthobacter autotrophicus Py2
+-*
+     /-Agrobacterium vitis S4
+  /-*
+  |  |  /-Agrobacterium sp. H13-3
+  |  \-*
+  |     \-Agrobacterium fabrum str. C58
+-*
+     /-Methylobacterium radiotolerans JCM 2831
+  /-*
+  |  |  /-Methylobacterium populi BJ001
+  |  \-*
+  |     |  /-Methylobacterium extorquens AM1
+  |     \-*
+  |        |  /-Methylobacterium extorquens PA1
+  |        \-*
+  |           |  /-Methylobacterium extorquens DM4
+  |           \-*
+  |              \-Methylobacterium extorquens CM4
+-*
+     /-Octadecabacter antarcticus 307
+  /-*
+  |  |  /-Roseobacter litoralis Och 149
+  |  \-*
+  |     \-Roseobacter denitrificans OCh 114
+-*
+     /-Ketogulonicigenium vulgare Y25
+  /-*
+  |  |  /-Rhodobacter capsulatus SB 1003
+  |  \-*
+  |     |  /-Rhodobacter sphaeroides ATCC 17025
+  |     \-*
+  |        |  /-Rhodobacter sphaeroides KD131
+  |        \-*
+  |           |  /-Rhodobacter sphaeroides ATCC 17029
+  |           \-*
+  |              \-Rhodobacter sphaeroides 2.4.1
+-*
+        /-Oligotropha carboxidovorans OM5
+     /-*
+     |  |  /-Rhodopseudomonas palustris BisA53
+     |  \-*
+     |     |  /-Nitrobacter hamburgensis X14
+     |     \-*
+     |        \-Nitrobacter winogradskyi Nb-255
+  /-*
+  |  |  /-Rhodopseudomonas palustris BisB18
+  |  \-*
+  |     |     /-Rhodopseudomonas palustris TIE-1
+  |     |  /-*
+  |     |  |  |  /-Rhodopseudomonas palustris CGA009
+  |     |  |  \-*
+  |     |  |     \-Rhodopseudomonas palustris DX-1
+  |     \-*
+  |        |  /-Rhodopseudomonas palustris BisB5
+  |        \-*
+  |           \-Rhodopseudomonas palustris HaA2
+-*
+           /-Ruegeria pomeroyi DSS-3
+        /-*
+        |  \-Leisingera methylohalidivorans DSM 14336
+     /-*
+     |  |  /-Ruegeria sp. TM1040
+     |  \-*
+     |     |  /-Phaeobacter gallaeciensis DSM 26640
+     |     \-*
+     |        |  /-Phaeobacter inhibens DSM 17395
+     |        \-*
+     |           \-Phaeobacter gallaeciensis 2.10
+  /-*
+  |  |  /-Dinoroseobacter shibae DFL 12 = DSM 16493
+  |  \-*
+  |     \-Jannaschia sp. CCS1
+-*
+50 genes have been clustered, out of 62 total, over 11 clusters.
