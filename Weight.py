@@ -1,8 +1,8 @@
 """
 File name: Weight.py
-Date created: 12/1/2016
-Date last modified: 12/1/2016
-Python version: 2.7
+Date created: 01/12/2016
+Date last modified: 04/07/2016
+Python version: 3.5.1
 Description: Weighting system used to 
 	adjust SVM classifcation of genes
 	during training.

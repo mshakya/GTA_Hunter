@@ -1,8 +1,8 @@
 """
 File name: Loader.py
-Date created: 22/10/2015
-Date last modified: 22/10/2015
-Python version: 2.7
+Date created: 10/22/2015
+Date last modified: 04/07/2016
+Python version: 3.5.1
 Description: A class containing a list
 	of profiles, loaded in by file.
 	Handle all file checking.

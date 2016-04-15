@@ -1,8 +1,8 @@
 """
 File name: Profile.py
-Date created: 22/10/2015
-Date last modified: 22/10/2015
-Python version: 2.7
+Date created: 10/22/2015
+Date last modified: 04/07/2016
+Python version: 3.5.1
 Description: A data structure for
 	gene data. Used by Loader in 
 	GTA_Tool suite.
@@ -41,14 +41,6 @@ class Profile:
 		if self.score:
 		  out = out + "\t" + score
 		return out
-
-	# messes up xval when collapsing split
-	# def __getitem__(self, pos):
-	# 	"""The feature at given postion
-	# 	Returns:
-	# 	  Feature (float)
-	# 	"""
-	# 	return self.features[pos]
 
 	def __len__(self):
 		"""The length of features

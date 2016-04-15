@@ -1,8 +1,8 @@
 """
 File name: SVM.py
-Date created: 4/12/2015
-Date last modified: 5/1/2016
-Python version: 3.5
+Date created: 12/04/2015
+Date last modified: 04/07/2016
+Python version: 3.5.1
 Description: Support Vector Machine
 	class that can train, test, and
 	cross validate on an array of Profiles.
