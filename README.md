@@ -1,26 +1,12 @@
-#GTA_Tool# is a python package used to distinguish between GTAs and viruses.
+#GTA_Tool is a python package used to distinguish between GTAs and viruses.
 
-GTA_Tool has the following dependencies:
+**GTA_Tool has the following dependencies:**
 - Python v3.5.1
 - NumPy v1.11
 - CVXOPT 1.1.8
 
-GTA_Tool is modular, with the following dependencies:
-		   GTA_Tool
-		  /  |  \  \
-		 /   |   \   \
-		/    |    \    \
-	   /     |     \     \
-	  /      |      \      \
-	 /       |       \       \
-	/        |        \       |
-   /         |         \	  |
-Loader	  Feature	  SVM   Weight
-  |
-Profile 	
-
-GTA_Tool.py is the main file, and is used through command line using the following commands:
-
+**GTA_Tool.py is the main file, and is used through command line using the following commands:**
+```
 GTA_Tool.py [-h] -g GTA -v VIRUS [-q QUERIES] [-k KMER] [-p [PSEAAC]]
                    [-m] [-w WEIGHT WEIGHT] [-t CLUSTER_TYPE] [-d DIST] [-c C]
                    [-x [XVAL]] [-e KERNEL KERNEL] [-s]
@@ -57,9 +43,9 @@ optional arguments:
                         Specify kernel to be used and sigma if applicable
                         (i.e. gaussian) (default='linear', 0).
   -s, --svs             Show support vectors.
-
-#Weight.py# may also be used separately for cluster analysis:
-
+```
+**Weight.py may also be used separately for cluster analysis:**
+```
 usage: Weight.py [-h] -p PROFILE_PATH -w PAIRWISE_PATH [-t CLUSTER_TYPE]
                  [-d CUTOFF] [-v] [-i] [-q] [-r R] [-c]
 
@@ -81,3 +67,4 @@ optional arguments:
                         given threshold.
   -c, --count           Shows how many profiles clustered into how many
                         clusters.
+```
