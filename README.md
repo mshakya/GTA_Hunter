@@ -3,7 +3,7 @@
 **GTA_Tool has the following dependencies:**
 - Python v3.5.1
 - NumPy v1.11
-- CVXOPT 1.1.8
+- CVXOPT v1.1.8
 
 **GTA_Tool.py is the main file, and is used through command line using the following commands:**
 ```
