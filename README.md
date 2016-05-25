@@ -1,13 +1,12 @@
-#GTA_Tool is a python package used to distinguish between GTAs and viruses.
+#GTA_Hunter
+  It is a bioinformatics tool that classifies homologs from GTA structural gene as true GTAs or viruses. The tool is written in `Python v3.5.1` and requires following Python packages.
 
-**GTA_Tool has the following dependencies:**
-- Python v3.5.1
 - NumPy v1.11
 - CVXOPT v1.1.8
 
-**GTA_Tool.py is the main file, and is used through command line using the following commands:**
+**GTA_Hunter.py is the main file, and is used through command line using the following commands:**
 ```
-GTA_Tool.py [-h] -g GTA -v VIRUS [-q QUERIES] [-k KMER] [-p [PSEAAC]]
+GTA_Hunter.py [-h] -g GTA -v VIRUS [-q QUERIES] [-k KMER] [-p [PSEAAC]]
                    [-m] [-w WEIGHT WEIGHT] [-t CLUSTER_TYPE] [-d DIST] [-c C]
                    [-x [XVAL]] [-e KERNEL KERNEL] [-s]
 
