@@ -1,7 +1,7 @@
 """
 File name: SVM.py
 Date created: 12/04/2015
-Date last modified: 04/07/2016
+Date last modified: 05/20/2016
 Python version: 3.5.1
 Description: Support Vector Machine
 	class that can train, test, and
@@ -13,6 +13,7 @@ Description: Support Vector Machine
 ###############
 from Profile import Profile
 from Loader import Loader
+from Weight import Weight
 import numpy as np
 import cvxopt
 import argparse
@@ -45,6 +46,11 @@ class Kernel:
 	@staticmethod
 	def gaussian(sigma):
 		return lambda x, y: np.exp(-np.sqrt(np.linalg.norm(x-y)**2 / (2*sigma**2)))
+
+	@staticmethod
+    def polynomial(power):
+    	return lambda x, y: np.dot(x, y)**power
+
 #############
 ### TRAIN ###
 #############
@@ -240,6 +246,11 @@ class SVM:
 				self.kernel = Kernel.gaussian(float(sigma))
 			except (ValueError, TypeError):
 				raise Exception("The sigma value could not be processed. Try and float or int.")
+		elif kernel == "polynomial":
+			try:
+				self.kernel = Kernel.polynomial(float(sigma))
+			except (ValueError, TypeError):
+				raise Exception("The power value could not be processed. Try and float or int.")
 		else:
 			raise Exception("Kernel type could not be detected. Try the following: linear, gaussian, MORE IF ADDED")
 		# Build Predictor
@@ -263,7 +274,7 @@ class SVM:
 			profile.score = score
 			profile.label = label
 
-	def xval(self, nfold=5, nrep=10):
+	def xval(self, nfold=5, nrep=10, pairwiseGTA=None, pairwiseViral=None, cluster_type='farthest', d=0.03):
 		"""n-fold cross validation of
 			the test set. 
 			Input:
@@ -297,8 +308,20 @@ class SVM:
 				trainY = np.array([-1.0 if y.label == self.label0 else 1.0 for y in train_fold])
 				testY = np.array([-1.0 if y.label == self.label0 else 1.0 for y in test_fold])
 				testNames = np.array([x.org_name for x in test_fold])
+				# randomize labels
+				# random.shuffle(trainY)
 				# Get training set weights
-				if np.any(self.weights != 1):
+				if pairwiseGTA:
+					# Reweight based on training set
+					# GTA
+					GTA_weight = Weight([x for x in train_fold if x.label == self.label0], pairwiseGTA)
+					GTA_clusters = GTA_weight.cluster(cluster_type, d)
+					GTA_weight.weight(GTA_clusters)
+					# Virus
+					virus_weight = Weight([x for x in train_fold if x.label != self.label0], pairwiseViral)
+					virus_clusters = virus_weight.cluster(cluster_type, d)
+					virus_weight.weight(virus_clusters)
+					# Grab updated weights
 					weights = np.array([x.weight for x in train_fold])
 				else:
 					weights = np.array([1 for x in train_fold])

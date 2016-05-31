@@ -49,7 +49,7 @@ if [ ${#gtas[@]} == ${#virals[@]} ] && [ ${#gtas[@]} == ${#testers[@]} ]
 		if [ $gn == $vn ] && [ $gn == $tn ] && [ $gn == $wgn ] && [ $gn == $wvn ]
 			then
 			# run gta_tool
-			python ../GTA_Tool.py -g $gta -v $viral -w $wgta $wviral -d $d -c $c -q $tester > $out
+			python ../GTA_Hunter.py -g $gta -v $viral -w $wgta $wviral -d $d -c $c -q $tester > $out
 			echo "We good on gene $gn."
 		else
 			echo "No good! Gene numbers off (g=$gn, wg=$wgn, v=$vn, wv=$wvn, t=$tn)"

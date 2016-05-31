@@ -1,7 +1,7 @@
 """
 File name: Weight.py
 Date created: 01/12/2016
-Date last modified: 04/07/2016
+Date last modified: 05/07/2016
 Python version: 3.5.1
 Description: Weighting system used to 
 	adjust SVM classifcation of genes
@@ -20,18 +20,6 @@ import argparse
 ############
 ### CODE ###
 ############
-def flatten(x):
-		"""List flattening function taken
-			from stackoverflow.com 
-		"""
-		result = []
-		for el in x:
-			if hasattr(el, "__iter__") and not isinstance(el, str):
-				result.extend(flatten(el))
-			else:
-				result.append(el)
-		return result
-
 class Weight:
 	"""Used to create weights for training set"""
 
@@ -64,12 +52,16 @@ class Weight:
 				pairwiseDict[parts[0]] = {parts[1]: float(parts[2])}
 		return pairwiseDict
 
-	def cluster(self, clusterType, cutoff):
+	def cluster(self, clusterType, cutoff, profiles=None):
 		"""Clusters profiles after distance has
 			been calculated. Hierarchical clustering
 			can be done using 'farthest' or 'nearest'
 			neighbors (type).
 		"""
+		# Set profiles
+		if profiles == None:
+			profiles = self.profiles
+		# Set cluster type
 		if clusterType == "nearest":
 			multiplier = 1
 		elif clusterType == "farthest":
@@ -78,7 +70,7 @@ class Weight:
 			print("Cluster type",clusterType,"not recongnized.")
 			return None
 		# Build list of clusters
-		clusters = [[profile] for profile in self.profiles]
+		clusters = set([frozenset([profile]) for profile in self.profiles])
 		# Loop until all clusters are merged
 		while len(clusters) > 1:
 			# Init
@@ -94,8 +86,8 @@ class Weight:
 						bestDist = multiplier * float("inf")
 						bestProf1 = None
 						bestProf2 = None
-						for profile1 in flatten(cluster1):
-							for profile2 in flatten(cluster2):
+						for profile1 in cluster1:
+							for profile2 in cluster2:
 								# Lookup profile distance
 								if profile1.name in self.pairwiseDict and \
 									profile2.name in self.pairwiseDict[profile1.name]:
@@ -121,8 +113,9 @@ class Weight:
 				#Exceeded cutoff, end clustering
 				return clusters
 			else:
-				# Merge clusters and remove others
-				clusters = clusters + [[minClust1, minClust2]]
+				# Merge clusters
+				clusters.add(minClust1.union(minClust2))
+				# Remove old clusters
 				clusters.remove(minClust1)
 				clusters.remove(minClust2)
 
@@ -133,7 +126,7 @@ class Weight:
 			how they are clustered together
 		"""
 		for cluster in clusters:
-			profiles = flatten(cluster)
+			profiles = cluster
 			cluster_size = len(profiles)
 			for profile in profiles:
 				profile.weight = 1.0 / cluster_size
@@ -191,7 +184,7 @@ class Weight:
 		cl = 0
 		for cluster in clusters:
 			if len(cluster) > 1:
-				clustered += len(flatten(cluster))
+				clustered += len(cluster)
 				cl += 1
 		print("%d genes have been clustered, out of %d total, over %d clusters." % (clustered, len(self.profiles), cl))
 

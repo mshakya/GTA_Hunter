@@ -1,7 +1,7 @@
 """
 File name: Loader.py
 Date created: 01/05/2016
-Date last modified: 04/07/2016
+Date last modified: 05/31/2016
 Python version: 3.5.1
 Description: A class for generating
 	and saving features for a given
@@ -47,6 +47,28 @@ HYDROPHOB_STANDARD =  {'A': 0.6362505881446506, 'Y': 0.26681476277033744, 'Q': -
 
 SIDECHAIN_STANDARD =  {'A': -1.5919364305641373, 'Y': 1.4624567208832167, 'Q': 0.3004593263108537, 'L': -0.19753955707730178, 'N': -0.16433963151809142, 'C': -0.5295388126694055, 'H': 0.6324585819029575, 'R': 1.2632571675279545, 'I': -0.19753955707730178, 'D': -0.13113970595888105, 'S': -1.0607376216167714, 'T': -0.5959386637878262, 'G': -2.0567353883930823, 'V': -0.662338514906247, 'W': 2.226055008745055, 'F': 0.9312579119358507, 'E': 0.3336592518700641, 'P': -0.6955384404654573, 'K': 0.3336592518700641, 'M': 0.40005910298848485}
 
+# Physicochemical properties of amino acids from Kaundal et al. Bioinformatics 2013
+PHYSICOCHEM = {'A': [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+				'C': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1],
+				'D': [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0],
+				'E': [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0],
+				'F': [0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+				'G': [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+				'H': [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+				'I': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+				'K': [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+				'L': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+				'M': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0],
+				'N': [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0],
+				'P': [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+				'Q': [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0],
+				'R': [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+				'S': [0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+				'T': [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+				'V': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+				'W': [0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0],
+				'Y': [0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]}
+
 ############
 ### CODE ###
 ############
@@ -59,17 +81,6 @@ class Feature:
 		"""
 		self.profiles = profiles
 		self.kmer_dict = {}
-
-	@staticmethod
-	def load(filename):
-		"""Loads dictionary for kmers
-		Args:
-		  file (string): the name of the file to be loaded
-		Returns:
-			A Feature Object
-		Example:
-		"""
-		pass
 
 	def make_kmer_dict(self, k, n=0):
 		"""Generates dictionary of kmers
@@ -136,14 +147,6 @@ class Feature:
 			else:
 				profile.features = feats
 
-	def kmer_select(self, n):
-		""" Selects the top n most
-			informative features from the 
-			kmer set. Called after kmers
-			are generated... Gonna be complex.
-		"""
-		keepers = []
-
 	def aa_score(self, aa1, aa2):
 		""" Returns score of two amino acids for
 			use in pseaac calculations. Incorporates
@@ -176,6 +179,8 @@ class Feature:
 				p20[aa] += 1
 			# Turn p20 into numeric list, keeping order constant
 			p20 = [value for (key, value) in sorted(p20.items())]
+			# Normalize
+			p20 = [aa/sum(p20) for aa in p20]
 			# Calculate the tier scores (lambda)
 			p20plus = [0.0] * lam
 			for k in range(1, lam+1):
@@ -197,106 +202,26 @@ class Feature:
 			else:
 				profile.features = feats
 
-# Command-line driver
-if __name__ == '__main__':
-	def standard_convert(param_dict):
-		""" Standard conversion for given AA calculated from
-			the sum of the 20 amino acids
+	def physicochem(self, profiles=None):
+		""" Physicochemical properties of amino
+			acids. Each protein generates a 19
+			dimensional feature vector consiting
+			of normalized frequencies of each property.
 		"""
-		dicter = {}
-		for aa in AA_LETTERS:
-			H = param_dict[aa]
-			Ha = sum([param_dict[key] for key in AA_LETTERS])/20.0
-			numerator = H - Ha
-			denominator = math.sqrt(sum([(param_dict[key] - Ha)**2 for key in AA_LETTERS])/20.0)
-			dicter[aa] = numerator / denominator
-		return dicter
-
-	print("HYDROPHIL_STANDARD = ",standard_convert(HYDROPHIL_SCORES))
-	print("HYDROPHOB_STANDARD = ",standard_convert(HYDROPHOB_SCORES))
-	print("SIDECHAIN_STANDARD = ",standard_convert(SIDECHAIN_MASS))
-	# # Define arg parser
-	# parser = argparse.ArgumentParser(description="Gene featuring.")
-
-	# ### Define Args ###
-
-	# # Main
-	# parser.add_argument("-g", "--GTA", type=str, nargs=1,
-	# 	dest="gta", required=True,
-	# 	help="The .faa or .fna training file for GTA genes.")
-	# parser.add_argument("-v", "--virus", type=str, nargs=1,
-	# 	dest="virus", required=True,
-	# 	help="The .faa or .fna training file for viral genes.")
-	# parser.add_argument("-k", "--kmer", type=int, nargs=1,
-	# 	dest="kmer", required=False, default=[4],
-	# 	help="The kmer size needed for feature generation (default=4).")
-
-	# args = parser.parse_args()
-	
-	# ### Load training set and make features ###
-	# gta_file = args.gta[0]
-	# virus_file = args.virus[0]
-	# kmer_size = args.kmer[0]
-	# # Load profiles
-	# gta_profs = Loader.load(gta_file, "GTA")
-	# viral_profs = Loader.load(virus_file, "virus")
-	# # Make features
-	# feats = Feature(gta_profs.profiles + viral_profs.profiles)
-	# feats.pseaac(lam=3, weight=0.05)
-	# feats.make_kmer_dict(kmer_size)
-	# feats.kmer_feat(gta_profs.profiles + viral_profs.profiles)
-
-	# ## Test Code ###
-	# # misclassified viral trainer: 77864702
-	# # correct viral trainer: 712912299, 168495136, 23505451
-	# # misclassified gta trainers: 85375630, 222107096
-	# # correct gta trainer: 126461901
-
-	# featureSet = np.array([x.features for x in gta_profs] + [y.features for y in viral_profs])
-	# featureSum = np.sum(featureSet, 0)
-
-	# v1 = viral_profs.profileDict["77864702"].features
-	# commonv1 = [1 if featureSum[i] == v1[i] else 0 for i in range(len(v1))]
-	# print("%s has %d/%d unique kmers in the kmer bag." % (viral_profs.profileDict["77864702"].org_name, sum(commonv1), len(commonv1)))
-
-	# v2 = viral_profs.profileDict["23505451"].features
-	# commonv2 = [1 if featureSum[i] == v2[i] else 0 for i in range(len(v2))]
-	# print("%s has %d/%d unique kmers in the kmer bag." % (viral_profs.profileDict["23505451"].org_name, sum(commonv2), len(commonv2)))
-
-	# v3 = viral_profs.profileDict["168495136"].features
-	# commonv3 = [1 if featureSum[i] == v3[i] else 0 for i in range(len(v3))]
-	# print("%s has %d/%d unique kmers in the kmer bag." % (viral_profs.profileDict["168495136"].org_name, sum(commonv3), len(commonv3)))
-
-	# g1 = gta_profs.profileDict["85375630"].features
-	# commong1 = [1 if featureSum[i] == g1[i] else 0 for i in range(len(g1))]
-	# print("%s has %d/%d unique kmers in the kmer bag." % (gta_profs.profileDict["85375630"].org_name,sum(commong1), len(commong1)))
-
-	# g2 = gta_profs.profileDict["222107096"].features
-	# commong2 = [1 if featureSum[i] == g2[i] else 0 for i in range(len(g2))]
-	# print("%s has %d/%d unique kmers in the kmer bag." % (gta_profs.profileDict["222107096"].org_name,sum(commong2), len(commong2)))
-
-	# g3 = gta_profs.profileDict["126461901"].features
-	# commong3 = [1 if featureSum[i] == g3[i] else 0 for i in range(len(g3))]
-	# print("%s has %d/%d unique kmers in the kmer bag." % (gta_profs.profileDict["126461901"].org_name,sum(commong3), len(commong3)))
-	# # azosprill and burkholderia commonality
-	# commons = [1 if  v1[i] > 0 and v3[i] > 0 else 0 for i in range(len(v1))]
-	# print("%s and %s have %d/%d kmers in common." % 
-	# 	(viral_profs.profileDict["77864702"].org_name,
-	# 	viral_profs.profileDict["168495136"].org_name, sum(commons), len(commons)))
-	# # azosprill and lactobac commonality
-	# commonss = [1 if  v2[i] > 0 and v3[i] > 0 else 0 for i in range(len(v1))]
-	# print("%s and %s have %d/%d kmers in common." % 
-	# 	(viral_profs.profileDict["23505451"].org_name,
-	# 	viral_profs.profileDict["168495136"].org_name, sum(commonss), len(commonss)))
-	# # burkholderia and lactobac commonality
-	# commonsss = [1 if  v1[i] > 0 and v2[i] > 0 else 0 for i in range(len(v1))]
-	# print("%s and %s have %d/%d kmers in common." % 
-	# 	(viral_profs.profileDict["77864702"].org_name,
-	# 	viral_profs.profileDict["23505451"].org_name, sum(commonsss), len(commonsss)))
-	# # burkholderia and lactobac commonality
-	# commonssss = [1 if  g1[i] > 0 and g2[i] > 0 else 0 for i in range(len(v1))]
-	# print("%s and %s have %d/%d kmers in common." % 
-	# 	(gta_profs.profileDict["85375630"].org_name,
-	# 	gta_profs.profileDict["222107096"].org_name, sum(commonssss), len(commonssss)))
-
-	# print(np.count_nonzero(gta_profs.profileDict["222107096"].features))
+		# Set profiles
+		if profiles == None:
+			profiles = self.profiles
+		# Loop through profiles
+		for profile in profiles:
+			# Initialize features
+			feats = [0.0] * 19
+			# Iterate over protein sequence
+			for aa in profile.prot_seq:
+				feats = np.add(feats, PHYSICOCHEM[aa])
+			# Normalize by sequence length
+			feats = [x / len(profile.prot_seq) for x in feats]
+			# Store
+			if profile.features:
+				profile.features += feats
+			else:
+				profile.features = feats

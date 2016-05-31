@@ -6,9 +6,12 @@
 
 **GTA_Hunter.py is the main file, and is used through command line using the following commands:**
 ```
-GTA_Hunter.py [-h] -g GTA -v VIRUS [-q QUERIES] [-k KMER] [-p [PSEAAC]]
-                   [-m] [-w WEIGHT WEIGHT] [-t CLUSTER_TYPE] [-d DIST] [-c C]
-                   [-x [XVAL]] [-e KERNEL KERNEL] [-s]
+usage: GTA_Hunter.py [-h] -g GTA -v VIRUS [-q QUERIES] [-k [KMER]]
+                     [-p [PSEAAC]] [-y] [-m] [-w WEIGHT WEIGHT]
+                     [-t CLUSTER_TYPE] [-d DIST] [-c C] [-x [XVAL]]
+                     [-e KERNEL KERNEL] [-s]
+
+Gene Classification Using SVM.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -17,12 +20,14 @@ optional arguments:
                         The .faa or .fna training file for viral genes.
   -q QUERIES, --queries QUERIES
                         The .faa or .fna query file to be classified.
-  -k KMER, --kmer KMER  The kmer size needed for feature generation
+  -k [KMER], --kmer [KMER]
+                        The kmer size needed for feature generation
                         (default=4).
   -p [PSEAAC], --pseaac [PSEAAC]
                         Expand feature set to include pseudo amino acid
-                        composition. Specify lamba (default=3) and weight
-                        (default = 0.05).
+                        composition. Specify lamba (default=3). Weight = 0.05.
+  -y, --physico         Expand feature set to include physicochemical
+                        composition.
   -m, --min             Print bare minimum results.
   -w WEIGHT WEIGHT, --weight WEIGHT WEIGHT
                         Allows for weighting of training set. Will need to
