@@ -48,8 +48,8 @@ class Kernel:
 		return lambda x, y: np.exp(-np.sqrt(np.linalg.norm(x-y)**2 / (2*sigma**2)))
 
 	@staticmethod
-    def polynomial(power):
-    	return lambda x, y: np.dot(x, y)**power
+	def polynomial(power):
+		return lambda x, y: np.dot(x, y)**power
 
 #############
 ### TRAIN ###

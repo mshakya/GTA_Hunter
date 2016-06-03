@@ -77,11 +77,14 @@ class Weight:
 			minClustDist = float("inf")
 			minClust1 = None
 			minClust2 = None
+			visited = set()
 			# Compare cluster pairs
 			for cluster1 in clusters:
+				# Keep track of sets we have already looked at
+				visited.add(cluster1)
 				for cluster2 in clusters:
 					# Compute distance if different
-					if cluster1 != cluster2:
+					if cluster2 not in visited:
 						# Loop over profiles in clusters
 						bestDist = multiplier * float("inf")
 						bestProf1 = None
@@ -108,6 +111,7 @@ class Weight:
 							minClustDist = bestDist
 							minClust1 = cluster1
 							minClust2 = cluster2
+				
 			#Check distance cutoff
 			if minClustDist > cutoff:
 				#Exceeded cutoff, end clustering
