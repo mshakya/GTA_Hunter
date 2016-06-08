@@ -109,16 +109,16 @@ if __name__ == '__main__':
 	viral_profs = Loader.load(virus_file, "virus")
 	# Make features
 	feats = Feature(gta_profs.profiles + viral_profs.profiles)
-	if args.kmer:
+	if args.kmer == None:
 		kmer_size = args.kmer
 		feats.make_kmer_dict(kmer_size)
 		feats.kmer_feat()
-	if args.pseaac:
+	if args.pseaac == None:
 		feats.pseaac(lam=int(args.pseaac), weight=PSE_WEIGHT)
 	if args.physico:
 		feats.physicochem()
 
-	if not args.kmer and not args.pseaac and not args.physico:
+	if args.kmer == None and args.pseaac == None and not args.physico:
 		print("You must specify at least one feature type (-k, -p, -y).")
 
 	else:
