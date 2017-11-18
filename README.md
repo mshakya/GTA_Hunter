@@ -11,6 +11,9 @@
 - pandas v. 0.21.0
 - Biopython v. 1.69
 
+## Third party requirements
+- BLAST v. 2.2.31+
+
 **GTA_Hunter.py is the main file, and is used through command line using the following commands:**
 ```
 usage: GTA_Hunter.py [-h] -g GTA -v VIRUS [-q QUERIES] [-k [KMER]]
