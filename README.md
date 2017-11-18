@@ -1,8 +1,15 @@
-#GTA_Hunter
-  It is a bioinformatics tool that classifies homologs from GTA structural gene as true GTAs or viruses. The tool is written in `Python v3.5.1` and requires following Python packages.
+# GTA_Hunter
+  It is a bioinformatics tool that classifies homologs from RcGTA structural gene as true GTAs or viruses. 
 
-- NumPy v1.11
-- CVXOPT v1.1.8
+## System Requirements
+ `Python v3.5.1` 
+
+## Python packages
+- NumPy v. 1.13.1
+- CVXOPT v. 1.1.8
+- matplotlib v. 2.1.0
+- pandas v. 0.21.0
+- Biopython v. 1.69
 
 **GTA_Hunter.py is the main file, and is used through command line using the following commands:**
 ```
